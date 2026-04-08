@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แบบฟอร์ม OT ไม่เข้าระบบ — AOTGA Passenger Services</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+      padding: 2rem 2rem 2.5rem;
+      width: 100%;
+      max-width: 580px;
+    }
+    .header { text-align: center; margin-bottom: 1.8rem; }
+    .logo-circle {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #042C53; color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .dept { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .form-title { font-size: 20px; font-weight: 600; color: #1a2b45; }
+    .form-sub { font-size: 12px; color: #aaa; margin-top: 2px; }
+    .divider { border: none; border-top: 1px solid #eee; margin: 1.2rem 0; }
+
+    .field { margin-bottom: 1.1rem; }
+    label { display: block; font-size: 13px; font-weight: 500; color: #444; margin-bottom: 5px; }
+    label .req { color: #e24b4a; margin-left: 2px; }
+    label .hint { font-weight: 400; color: #aaa; font-size: 11px; margin-left: 6px; }
+    input[type="text"], input[type="date"], select, textarea {
+      width: 100%; padding: 9px 12px;
+      border: 1px solid #dde1e7; border-radius: 8px;
+      font-size: 14px; color: #222;
+      background: #fafbfc;
+      transition: border-color 0.15s;
+      font-family: inherit;
+    }
+    input[type="text"]:focus, input[type="date"]:focus,
+    select:focus, textarea:focus {
+      outline: none; border-color: #185FA5; background: #fff;
+    }
+    input.error, select.error, textarea.error { border-color: #e24b4a !important; }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
+
+    .btn-submit {
+      width: 100%; margin-top: 1.4rem;
+      background: #042C53; color: #fff;
+      border: none; border-radius: 8px;
+      padding: 13px; font-size: 15px; font-weight: 600;
+      cursor: pointer; letter-spacing: 0.3px;
+      transition: background 0.15s;
+    }
+    .btn-submit:hover { background: #0C447C; }
+    .btn-submit:disabled { background: #99afc5; cursor: not-allowed; }
+
+    .success-box {
+      display: none; text-align: center;
+      padding: 2.5rem 1rem; border-radius: 10px;
+      background: #eaf3de; border: 1px solid #c0dd97;
+    }
+    .success-icon { font-size: 40px; margin-bottom: 10px; }
+    .success-box h3 { color: #3b6d11; font-size: 17px; margin-bottom: 6px; }
+    .success-box p { color: #639922; font-size: 13px; }
+    .btn-reset {
+      margin-top: 1rem; background: #3b6d11; color: #fff;
+      border: none; border-radius: 6px; padding: 8px 20px;
+      font-size: 13px; cursor: pointer; border-radius: 6px;
+    }
+    .btn-reset:hover { background: #27500A; }
+
+    .footer { text-align: center; margin-top: 1.5rem; font-size: 11px; color: #bbb; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="logo-circle">AOT<br>GA</div>
+    <p class="dept">AOTGA — Passenger Services Department</p>
+    <p class="form-title">แบบฟอร์ม OT ไม่เข้าระบบ</p>
+    <p class="form-sub">Overtime Not Recorded in System</p>
+  </div>
+  <hr class="divider" />
+
+  <div id="mainForm">
+    <div class="row2">
+      <div class="field">
+        <label>รหัสพนักงาน<span class="req">*</span></label>
+        <input type="text" id="empId" placeholder="เช่น XXXXXXX" maxlength="10" />
+      </div>
+      <div class="field">
+        <label>ชื่อ-นามสกุล<span class="req">*</span></label>
+        <input type="text" id="empName" placeholder="ชื่อ นามสกุล" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>ตำแหน่ง<span class="req">*</span></label>
+      <select id="position">
+        <option value="">— เลือกตำแหน่ง —</option>
+        <option>Passenger Services Agent</option>
+        <option>Senior Passenger Services</option>
+        <option>Passenger Services Supervisor</option>
+        <option>Baggage Services Agent</option>
+        <option>Senior Baggage Services</option>
+        <option>Baggage Services Supervisor</option>
+        <option>Special Services Agent</option>
+        <option>Special Services Supervisor</option>
+        <option>Porter</option>
+      </select>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label>วันที่<span class="req">*</span></label>
+        <input type="date" id="workDate" />
+      </div>
+      <div class="field">
+        <label>สถานะ<span class="req">*</span></label>
+        <select id="dayStatus">
+          <option value="">— เลือกสถานะ —</option>
+          <option>วันทำงาน</option>
+          <option>วันหยุด</option>
+          <option>วันหยุดนักขัตฤกษ์</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>กะการทำงาน<span class="req">*</span><span class="hint">เช่น 06:00–14:00 / Night shift</span></label>
+      <input type="text" id="shift" placeholder="ระบุกะการทำงาน" />
+    </div>
+
+    <div class="field">
+      <label>สาเหตุที่ OT ไม่เข้าระบบ<span class="req">*</span></label>
+      <textarea id="reason" placeholder="อธิบายสาเหตุโดยละเอียด..."></textarea>
+    </div>
+
+    <button class="btn-submit" onclick="submitForm()">ส่งข้อมูล</button>
+  </div>
+
+  <div class="success-box" id="successBox">
+    <div class="success-icon">✓</div>
+    <h3>ส่งข้อมูลเรียบร้อยแล้ว</h3>
+    <p>ข้อมูลของท่านถูกบันทึกเข้า Google Sheets แล้ว<br>ขอบคุณที่แจ้งข้อมูล OT</p>
+    <button class="btn-reset" onclick="resetForm()">ส่งรายการใหม่</button>
+  </div>
+
+  <p class="footer">AOTGA Passenger Services Department &nbsp;|&nbsp; Suvarnabhumi Airport (BKK)</p>
+</div>
+
+<script>
+  // *** วาง URL ของ Google Apps Script ที่นี่ ***
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzU4pcJT9J3ALtaoS67bLI-2CW3Xbia6f6DJGc4RM7hZLVRNQkdA35DXrRReGXhohb_/exec';
+
+  const FIELDS = [
+    { id: 'empId',     label: 'รหัสพนักงาน' },
+    { id: 'empName',   label: 'ชื่อ-นามสกุล' },
+    { id: 'position',  label: 'ตำแหน่ง' },
+    { id: 'workDate',  label: 'วันที่' },
+    { id: 'dayStatus', label: 'สถานะ' },
+    { id: 'shift',     label: 'กะการทำงาน' },
+    { id: 'reason',    label: 'สาเหตุ' },
+  ];
+
+  function submitForm() {
+    let valid = true;
+    FIELDS.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (!el.value.trim()) {
+        el.classList.add('error');
+        if (valid) { el.focus(); alert('กรุณากรอก: ' + f.label); }
+        valid = false;
+      } else {
+        el.classList.remove('error');
+      }
+    });
+    if (!valid) return;
+
+    const now = new Date();
+    const thDate = now.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+
+    const payload = {
+      submittedAt: thDate,
+      empId:      document.getElementById('empId').value.trim(),
+      empName:    document.getElementById('empName').value.trim(),
+      position:   document.getElementById('position').value,
+      workDate:   document.getElementById('workDate').value,
+      dayStatus:  document.getElementById('dayStatus').value,
+      shift:      document.getElementById('shift').value.trim(),
+      reason:     document.getElementById('reason').value.trim(),
+    };
+
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = 'กำลังส่งข้อมูล...';
+    btn.disabled = true;
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      document.getElementById('mainForm').style.display = 'none';
+      document.getElementById('successBox').style.display = 'block';
+    })
+    .catch(() => {
+      alert('เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง');
+      btn.textContent = 'ส่งข้อมูล';
+      btn.disabled = false;
+    });
+  }
+
+  function resetForm() {
+    FIELDS.forEach(f => {
+      const el = document.getElementById(f.id);
+      el.value = '';
+      el.classList.remove('error');
+    });
+    document.getElementById('mainForm').style.display = 'block';
+    document.getElementById('successBox').style.display = 'none';
+    const btn = document.querySelector('.btn-submit');
+    btn.textContent = 'ส่งข้อมูล';
+    btn.disabled = false;
+  }
+</script>
+</body>
+</html>
